@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог клиентов</title>
+    <style>
+        body {
+            background-image: url(./img/shesterenki-111.jpg);
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1b136f;
+            backdrop-filter: blur(10px)
+        }
+
+        /* Контейнер с максимальной шириной */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            /* Выравнивание по центру */
+            padding: 20px;
+            background-image: url(./img/shesterenki-111.jpg);
+        }
+
+        /* Логотип */
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo img {
+            width: 500px;
+            height: auto;
+        }
+
+        /* Информация о клиенте */
+        .client-info {
+            margin-right: auto;
+            margin-left: auto;
+            width: 500px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 600px;
+            /* Фиксированная высота */
+            overflow-y: auto;
+            /* Прокрутка при переполнении */
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .buttons {
+            text-align: center
+        }
+
+        .btn-next,
+        .btn-prev {
+            display: inline-block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-next:hover,
+        .btn-prev:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-next.hidden {
+            display: none;
+        }
+
+        /* Стиль для номера телефона */
+        .phone-number {
+            color: #007bff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .phone-number:hover {
+            text-decoration: underline;
+        }
+
+        .fire-img {
+            transform: scale(-1, 1);
+            margin-top: 410px;
+            width: 350px;
+            top: 10px;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .zhucka-img {
+            margin-left: 800px;
+            margin-top: 627px;
+            width: 150px;
+            top: 10px;
+            position: absolute;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Логотип -->
+        <div class="logo">
+            <img src="./img/Без_имени-12323-removebg-preview.png" alt="Logo">
+        </div>
+
+        <!-- Информация о клиенте -->
+        <div class="client-info">
+            <p><strong>ФИО:</strong> <span id="last_name"></span> <span id="first_name"></span> <span
+                    id="middle_name"></span></p>
+            <p><strong>Дата рождения:</strong> <span id="birth_date"></span></p>
+            <p><strong>Телефон:</strong> <span id="phone" class="phone-number"></span></p>
+            <p><strong>Электронная почта:</strong> <span id="email"></span></p>
+            <p><strong>Роль:</strong> <span id="role"></span></p>
+            <p><strong>Страна:</strong> <span id="country"></span></p>
+            <p><strong>Регион:</strong> <span id="region"></span></p>
+            <p><strong>Школа:</strong> <span id="school"></span></p>
+            <p><strong>Адрес:</strong> <span id="address"></span></p>
+            <p><strong>Оператор:</strong> <span id="operator"></span></p>
+            <p><strong>Местоположение:</strong> <span id="location"></span></p>
+            <p><strong>Часовой пояс:</strong> <span id="timezone"></span></p>
+            <p><strong>Баллы:</strong> <span id="score"></span></p>
+
+        </div>
+        <div>
+            <div>
+                <div>
+                    <img class="fire-img" src="./img/394e6155f190fbf2ee083cfa6fbc7920.630x820.jpg" alt="">
+                </div>
+
+                <div>
+                    <img class="zhucka-img" src="./img/3F3F3F_2D.jpg" alt="">
+                </div>
+                <!-- Кнопки для навигации -->
+                <div class="buttons">
+                    <button class="btn-prev" id="prevButton">Предыдущий клиент</button>
+                    <button class="btn-next" id="nextButton">Следующий клиент</button>
+                </div>
+            </div>
+
+            <script>
+                // Массив клиентов
+                const clients = [
+                    {
+                        "phone": "79513003702",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Авданин",
+                        "first_name": "Михаил",
+                        "middle_name": "Александрович",
+                        "birth_date": "10.02.2009"
+                    },
+                    {
+                        "phone": "79778474431",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Агапитова",
+                        "first_name": "Варвара",
+                        "middle_name": "Александровна",
+                        "birth_date": "02.03.2009"
+                    },
+                    {
+                        "phone": "79919372892",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Андриянов",
+                        "first_name": "Александр",
+                        "middle_name": "Александрович",
+                        "birth_date": "13.02.2009"
+                    },
+                    {
+                        "phone": "79777758845",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Артемова",
+                        "first_name": "Анастасия",
+                        "middle_name": "Игоревна",
+                        "birth_date": "27.02.2009"
+                    },
+                    {
+                        "phone": "79029899656",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Баяндурян",
+                        "first_name": "Нара",
+                        "middle_name": "Армаисовна",
+                        "birth_date": "02.03.2009"
+                    },
+                    {
+                        "phone": "79859260331",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Беляев",
+                        "first_name": "Владимир",
+                        "middle_name": "Сергеевич",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79772661565",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Березин",
+                        "first_name": "Андрей",
+                        "middle_name": "Александрович",
+                        "birth_date": "20.02.2009"
+                    },
+                    {
+                        "phone": "79772634124",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Береснев",
+                        "first_name": "Данила",
+                        "middle_name": "Владимирович",
+                        "birth_date": "19.02.2009"
+                    },
+                    {
+                        "phone": "79013478130",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Бони",
+                        "first_name": "Елизавета",
+                        "middle_name": "Владимировна",
+                        "birth_date": "25.02.2009"
+                    },
+                    {
+                        "phone": "79166640102",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Боровицкий",
+                        "first_name": "Арсений",
+                        "middle_name": "Леонидович",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79771656190",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Булгинов",
+                        "first_name": "Арсений",
+                        "middle_name": "Сергеевич",
+                        "birth_date": "28.02.2009"
+                    },
+                    {
+                        "phone": "79175310333",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Бундуков",
+                        "first_name": "Илья",
+                        "middle_name": "Олегович",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79774097346",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Быкова",
+                        "first_name": "Кристина",
+                        "middle_name": "Александровна",
+                        "birth_date": "13.02.2009"
+                    },
+                    {
+                        "phone": "79919230450",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Вахобов",
+                        "first_name": "Хусейн",
+                        "middle_name": "Хуршедович",
+                        "birth_date": "02.03.2009"
+                    },
+                    {
+                        "phone": "79779076849",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Вдовиченко",
+                        "first_name": "Мария",
+                        "middle_name": "Евгеньевна",
+                        "birth_date": "19.02.2009"
+                    },
+                    {
+                        "phone": "79169266171",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Ветюгов",
+                        "first_name": "Александр",
+                        "middle_name": "Александрович",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79773596778",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Гасанова",
+                        "first_name": "Айнур",
+                        "middle_name": "",
+                        "birth_date": "19.02.2009"
+                    },
+                    {
+                        "phone": "79152213458",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Гвоздева",
+                        "first_name": "Юлия",
+                        "middle_name": "",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79152213458",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Гвоздева",
+                        "first_name": "Юлия",
+                        "middle_name": "Сергеевна",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79017425828",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Гвоздкова",
+                        "first_name": "Арина",
+                        "middle_name": "Вячеславовна",
+                        "birth_date": "13.02.2009"
+                    },
+                    {
+                        "phone": "79776270050",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Георгиевский",
+                        "first_name": "Максим",
+                        "middle_name": "Денисович",
+                        "birth_date": "01.03.2009"
+                    },
+                    {
+                        "phone": "79776684576",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Григорьева",
+                        "first_name": "София",
+                        "middle_name": "Денисовна",
+                        "birth_date": "16.02.2009"
+                    },
+                    {
+                        "phone": "79777314828",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Гришина",
+                        "first_name": "Ксения",
+                        "middle_name": "Ильинична",
+                        "birth_date": "12.02.2009"
+                    },
+                    {
+                        "phone": "79776217123",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Громыхина",
+                        "first_name": "Софья",
+                        "middle_name": "Александровна",
+                        "birth_date": "24.02.2009"
+                    },
+                    {
+                        "phone": "79309444634",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Грушина",
+                        "first_name": "Елена",
+                        "middle_name": "Сергеевна",
+                        "birth_date": "20.02.2009"
+                    },
+                    {
+                        "phone": "79778313805",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Гулевич",
+                        "first_name": "Дмитрий",
+                        "middle_name": "Валерьевич",
+                        "birth_date": "21.02.2009"
+                    },
+                    {
+                        "phone": "79779681529",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Гурьянов",
+                        "first_name": "Влад",
+                        "middle_name": "Александрович",
+                        "birth_date": "15.02.2009"
+                    },
+                    {
+                        "phone": "79917436757",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Давыдова",
+                        "first_name": "Мария",
+                        "middle_name": "Владимировна",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79772963577",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Детушев",
+                        "first_name": "Илья",
+                        "middle_name": "Дмитриевич",
+                        "birth_date": "26.02.2009"
+                    },
+                    {
+                        "phone": "79776617164",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Добейко",
+                        "first_name": "Полина",
+                        "middle_name": "Александровна",
+                        "birth_date": "27.02.2009"
+                    },
+                    {
+                        "phone": "79772986910",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Домашний",
+                        "first_name": "Богдан",
+                        "middle_name": "Русланович",
+                        "birth_date": "19.02.2009"
+                    },
+                    {
+                        "phone": "79779944439",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Еремеев",
+                        "first_name": "Павел",
+                        "middle_name": "Игоревич",
+                        "birth_date": "26.02.2009"
+                    },
+                    {
+                        "phone": "79771669004",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Еремкина",
+                        "first_name": "Дарья",
+                        "middle_name": "Евгеньевна",
+                        "birth_date": "25.02.2009"
+                    },
+                    {
+                        "phone": "79013434386",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Ержанов",
+                        "first_name": "Тимур",
+                        "middle_name": "Радмирович",
+                        "birth_date": "14.02.2009"
+                    },
+                    {
+                        "phone": "79017048213",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Жарков",
+                        "first_name": "Даниил",
+                        "middle_name": "Алексеевич",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79771701427",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Загребеев",
+                        "first_name": "Леонид",
+                        "middle_name": "Сергеевич",
+                        "birth_date": "22.02.2009"
+                    },
+                    {
+                        "phone": "79777946451",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Зейналова",
+                        "first_name": "Саида",
+                        "middle_name": "Абдуловна",
+                        "birth_date": "21.02.2009"
+                    },
+                    {
+                        "phone": "79776431738",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Кадамшоева",
+                        "first_name": "Дилноза",
+                        "middle_name": "Адолатшова",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79141904103",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Калашников",
+                        "first_name": "Клим",
+                        "middle_name": "Михайлович",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79011803221",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Капсютов",
+                        "first_name": "Абдир",
+                        "middle_name": "Андреевич",
+                        "birth_date": "28.02.2009"
+                    },
+                    {
+                        "phone": "79001075099",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Карпунькина",
+                        "first_name": "Екатерина",
+                        "middle_name": "Андреевна",
+                        "birth_date": "21.02.2009"
+                    },
+                    {
+                        "phone": "79779409164",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Киреева",
+                        "first_name": "София",
+                        "middle_name": "Владимировна",
+                        "birth_date": "18.02.2009"
+                    },
+                    {
+                        "phone": "79916031123",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Клочков",
+                        "first_name": "Лев",
+                        "middle_name": "Дмитриевич",
+                        "birth_date": "17.02.2009"
+                    },
+                    {
+                        "phone": "79774131404",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Копченов",
+                        "first_name": "Алексей",
+                        "middle_name": "Иванович",
+                        "birth_date": "19.02.2009"
+                    },
+                    {
+                        "phone": "79773654987",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Коробков",
+                        "first_name": "Руслан",
+                        "middle_name": "Антонович",
+                        "birth_date": "20.02.2009"
+                    },
+                    {
+                        "phone": "79773036495",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Костандян",
+                        "first_name": "Диана",
+                        "middle_name": "Самвеловна",
+                        "birth_date": "20.02.2009"
+                    },
+                    {
+                        "phone": "79011827305",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Краузе",
+                        "first_name": "Владимир",
+                        "middle_name": "Александрович",
+                        "birth_date": "25.02.2009"
+                    },
+                    {
+                        "phone": "79778969523",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Кротов",
+                        "first_name": "Андрей",
+                        "middle_name": "Матвеевич",
+                        "birth_date": "20.02.2009"
+                    },
+                    {
+                        "phone": "79773162990",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Крутова",
+                        "first_name": "Дарья",
+                        "middle_name": "Денисовна",
+                        "birth_date": "25.02.2009"
+                    },
+                    {
+                        "phone": "79775458890",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Кузьмина",
+                        "first_name": "Екатерина",
+                        "middle_name": "Сергеевна",
+                        "birth_date": "22.02.2009"
+                    },
+                    {
+                        "phone": "79852627038",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Курылев",
+                        "first_name": "Денис",
+                        "middle_name": "Вячеславович",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79152748896",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Лагутина",
+                        "first_name": "Оксана",
+                        "middle_name": "Александровна",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79773569201",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Литвиненко",
+                        "first_name": "Артём",
+                        "middle_name": "Павлович",
+                        "birth_date": "26.02.2009"
+                    },
+                    {
+                        "phone": "79166330723",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Мазур",
+                        "first_name": "Даниил",
+                        "middle_name": "Алексеевич",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79003716512",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Макущенко",
+                        "first_name": "Полина",
+                        "middle_name": "",
+                        "birth_date": "25.02.2009"
+                    },
+                    {
+                        "phone": "79774785509",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Мартынова",
+                        "first_name": "Арина",
+                        "middle_name": "Андреевна",
+                        "birth_date": "22.02.2009"
+                    },
+                    {
+                        "phone": "79001480103",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Маслова",
+                        "first_name": "Вероника",
+                        "middle_name": "Алексеевна",
+                        "birth_date": "12.02.2009"
+                    },
+                    {
+                        "phone": "79779348122",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Мишин",
+                        "first_name": "Алексей",
+                        "middle_name": "Романович",
+                        "birth_date": "10.02.2009"
+                    },
+                    {
+                        "phone": "79773648803",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Морарь",
+                        "first_name": "Анна",
+                        "middle_name": "Васильевна",
+                        "birth_date": "24.02.2009"
+                    },
+                    {
+                        "phone": "79013330593",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Морозов",
+                        "first_name": "Арсений",
+                        "middle_name": "Денисович",
+                        "birth_date": "16.02.2009"
+                    },
+                    {
+                        "phone": "79028448372",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Муравьёва",
+                        "first_name": "Дарья",
+                        "middle_name": "Александровна",
+                        "birth_date": "13.02.2009"
+                    },
+                    {
+                        "phone": "79024494994",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Мышкина",
+                        "first_name": "Арина",
+                        "middle_name": "Максимовна",
+                        "birth_date": "01.03.2009"
+                    },
+                    {
+                        "phone": "79773714694",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Назаров",
+                        "first_name": "Александр",
+                        "middle_name": "Дмитриевич",
+                        "birth_date": "02.03.2009"
+                    },
+                    {
+                        "phone": "79013868050",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Никитина",
+                        "first_name": "Полина",
+                        "middle_name": "",
+                        "birth_date": "13.02.2009"
+                    },
+                    {
+                        "phone": "79160319733",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Новикова",
+                        "first_name": "Ольга",
+                        "middle_name": "Михайловна",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79028459316",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Нуралиева",
+                        "first_name": "Екатерина",
+                        "middle_name": "Назаралиевна",
+                        "birth_date": "19.02.2009"
+                    },
+                    {
+                        "phone": "79777667401",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Павелко",
+                        "first_name": "Сергей",
+                        "middle_name": "Геннадьевич",
+                        "birth_date": "25.02.2009"
+                    },
+                    {
+                        "phone": "79772972756",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Павлов",
+                        "first_name": "Тимофей",
+                        "middle_name": "Александрович",
+                        "birth_date": "02.03.2009"
+                    },
+                    {
+                        "phone": "79775208965",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Палиева",
+                        "first_name": "Ольга",
+                        "middle_name": "Викторовна",
+                        "birth_date": "02.03.2009"
+                    },
+                    {
+                        "phone": "79774170253",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Панфилова",
+                        "first_name": "Ульяна",
+                        "middle_name": "Алексеевна",
+                        "birth_date": "10.02.2009"
+                    },
+                    {
+                        "phone": "79776695679",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Паршина",
+                        "first_name": "Анастасия",
+                        "middle_name": "Андреевна",
+                        "birth_date": "16.02.2009"
+                    },
+                    {
+                        "phone": "79017005025",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Петрова",
+                        "first_name": "Полина",
+                        "middle_name": "Игоревна",
+                        "birth_date": "18.02.2009"
+                    },
+                    {
+                        "phone": "79917006835",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Петровская",
+                        "first_name": "Юлия",
+                        "middle_name": "Сергеевна",
+                        "birth_date": "27.02.2009"
+                    },
+                    {
+                        "phone": "79779075412",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Пичугина",
+                        "first_name": "Евгения",
+                        "middle_name": "",
+                        "birth_date": "18.02.2009"
+                    },
+                    {
+                        "phone": "79771357525",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Полишина",
+                        "first_name": "Виктория",
+                        "middle_name": "Игоревна",
+                        "birth_date": "09.02.2009"
+                    },
+                    {
+                        "phone": "79773793268",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Прохоренков",
+                        "first_name": "Алексей",
+                        "middle_name": "Алексеевич",
+                        "birth_date": "19.02.2009"
+                    },
+                    {
+                        "phone": "79017797514",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Рашидов",
+                        "first_name": "Сардорбек",
+                        "middle_name": "Абдумуминович",
+                        "birth_date": "15.02.2009"
+                    },
+                    {
+                        "phone": "79772867023",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Редько",
+                        "first_name": "Дарья",
+                        "middle_name": "Максимовна",
+                        "birth_date": "26.02.2009"
+                    },
+                    {
+                        "phone": "79774891085",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Рыбак",
+                        "first_name": "Жанна",
+                        "middle_name": "Евгеньевна",
+                        "birth_date": "16.02.2009"
+                    },
+                    {
+                        "phone": "79586428832",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Савостиков",
+                        "first_name": "Владислав",
+                        "middle_name": "Владимирович",
+                        "birth_date": "25.02.2009"
+                    },
+                    {
+                        "phone": "79081499212",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Сайкова",
+                        "first_name": "Софья",
+                        "middle_name": "Сергеевна",
+                        "birth_date": "02.03.2009"
+                    },
+                    {
+                        "phone": "79916281513",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Седиков",
+                        "first_name": "Максим",
+                        "middle_name": "Сергеевич",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79776532427",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Селезнёв",
+                        "first_name": "Максим",
+                        "middle_name": "Павлович",
+                        "birth_date": "14.02.2009"
+                    },
+                    {
+                        "phone": "79154108901",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Сердюк",
+                        "first_name": "Прохор",
+                        "middle_name": "Викторович",
+                        "birth_date": "03.03.2009"
+                    },
+                    {
+                        "phone": "79773798487",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Силкина",
+                        "first_name": "Екатерина",
+                        "middle_name": "Егоровна",
+                        "birth_date": "09.02.2009"
+                    },
+                    {
+                        "phone": "79779646869",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Смирнов",
+                        "first_name": "Никита",
+                        "middle_name": "Николаевич",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79776775600",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Соловова",
+                        "first_name": "Кристина",
+                        "middle_name": "Станиславовна",
+                        "birth_date": "25.02.2009"
+                    },
+                    {
+                        "phone": "79017503290",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Спирина",
+                        "first_name": "Анастасия",
+                        "middle_name": "Игоревна",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79586408530",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Сушков",
+                        "first_name": "Егор",
+                        "middle_name": "Игоревич",
+                        "birth_date": "09.02.2009"
+                    },
+                    {
+                        "phone": "79772577807",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Такушинова",
+                        "first_name": "Милана",
+                        "middle_name": "Арсеньевна",
+                        "birth_date": "12.02.2009"
+                    },
+                    {
+                        "phone": "79501074011",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Тимошин",
+                        "first_name": "Наталья",
+                        "middle_name": "",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79778033491",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Титяев",
+                        "first_name": "Максим",
+                        "middle_name": "Александрович",
+                        "birth_date": "09.02.2009"
+                    },
+                    {
+                        "phone": "79918834679",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Торак",
+                        "first_name": "Анастасия",
+                        "middle_name": "Ивановна",
+                        "birth_date": "11.02.2009"
+                    },
+                    {
+                        "phone": "79777964951",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Трошкина",
+                        "first_name": "Евгения",
+                        "middle_name": "Сергеевна",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79776542080",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Турчинский",
+                        "first_name": "Максим",
+                        "middle_name": "Николаевич",
+                        "birth_date": "23.02.2009"
+                    },
+                    {
+                        "phone": "79775971945",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Федянин",
+                        "first_name": "Максим",
+                        "middle_name": "Евгеньевич",
+                        "birth_date": "20.02.2009"
+                    },
+                    {
+                        "phone": "79777010265",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Филянова",
+                        "first_name": "Юлия",
+                        "middle_name": "Александровна",
+                        "birth_date": "26.02.2009"
+                    },
+                    {
+                        "phone": "79775182445",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Харфидинов",
+                        "first_name": "Мухаммад",
+                        "middle_name": "Рахмидинович",
+                        "birth_date": "12.02.2009"
+                    },
+                    {
+                        "phone": "79777999603",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Цой",
+                        "first_name": "Евгений",
+                        "middle_name": "Николаевич",
+                        "birth_date": "11.02.2009"
+                    },
+                    {
+                        "phone": "79585000740",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Чебанов",
+                        "first_name": "Егор",
+                        "middle_name": "Александрович",
+                        "birth_date": "11.02.2009"
+                    },
+                    {
+                        "phone": "79771657520",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Черевко",
+                        "first_name": "Полина",
+                        "middle_name": "Сергеевна",
+                        "birth_date": "16.02.2009"
+                    },
+                    {
+                        "phone": "79776312405",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Черных",
+                        "first_name": "Татьяна",
+                        "middle_name": "Дмитриевна",
+                        "birth_date": "18.02.2009"
+                    },
+                    {
+                        "phone": "79011090030",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Черчиев",
+                        "first_name": "Умар",
+                        "middle_name": "Ибрагимович",
+                        "birth_date": "11.02.2009"
+                    },
+                    {
+                        "phone": "79774415960",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Чупис",
+                        "first_name": "Николай",
+                        "middle_name": "Михайлович",
+                        "birth_date": "15.02.2009"
+                    },
+                    {
+                        "phone": "79585009034",
+                        "region": "Московская область",
+                        "operator": "Т2 Мобайл",
+                        "timezone": "+3:00",
+                        "last_name": "Швецов",
+                        "first_name": "Владислав",
+                        "middle_name": "Николаевич",
+                        "birth_date": "09.02.2009"
+                    },
+                    {
+                        "phone": "79884573532",
+                        "region": "Московская область",
+                        "operator": "Мобильные ТелеСистемы",
+                        "timezone": "+3:00",
+                        "last_name": "Шилов",
+                        "first_name": "Александр",
+                        "middle_name": "",
+                        "birth_date": "02.03.2009"
+                    }
+
+                ];
+
+                // Считываем сохраненный индекс или начинаем с первого клиента
+                let currentIndex = localStorage.getItem('currentIndex');
+                if (currentIndex === null) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex = parseInt(currentIndex);
+                }
+
+                // Функция для отображения информации о клиенте
+                function showClient(index) {
+                    const client = clients[index];
+                    document.getElementById('last_name').textContent = client.last_name;
+                    document.getElementById('first_name').textContent = client.first_name;
+                    document.getElementById('middle_name').textContent = client.middle_name;
+                    document.getElementById('birth_date').textContent = client.birth_date;
+                    document.getElementById('phone').textContent = client.phone;
+                    document.getElementById('email').textContent = client.email;
+                    document.getElementById('role').textContent = client.role;
+                    document.getElementById('country').textContent = client.country;
+                    document.getElementById('region').textContent = client.region;
+                    document.getElementById('school').textContent = client.school;
+                    document.getElementById('address').textContent = client.address;
+                    document.getElementById('operator').textContent = client.operator;
+                    document.getElementById('location').textContent = client.location;
+                    document.getElementById('timezone').textContent = client.timezone;
+                    document.getElementById('score').textContent = client.score;
+                }
+
+                // Функция для копирования номера телефона
+                function copyPhoneNumber() {
+                    const phoneNumber = document.getElementById('phone').textContent;
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(phoneNumber).then(function () {
+                            alert('Номер телефона скопирован в буфер обмена');
+                        }).catch(function (err) {
+                            console.error('Ошибка при копировании:', err);
+                        });
+                    } else {
+                        const textarea = document.createElement('textarea');
+                        textarea.value = phoneNumber;
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        alert('Номер телефона скопирован в буфер обмена');
+                    }
+                }
+
+                // Показываем первого клиента
+                showClient(currentIndex);
+
+                // Обработчик клика по номеру телефона
+                document.getElementById('phone').addEventListener('click', copyPhoneNumber);
+
+                // Функция обновления видимости кнопок
+                function updateButtons() {
+                    document.getElementById('prevButton').style.display = currentIndex === 0 ? 'none' : 'inline-block';
+                    document.getElementById('nextButton').style.display = currentIndex === clients.length - 1 ? 'none' : 'inline-block';
+                }
+
+                // Переход к следующему клиенту
+                function nextClient() {
+                    if (currentIndex < clients.length - 1) {
+                        currentIndex++;
+                        localStorage.setItem('currentIndex', currentIndex);
+                        showClient(currentIndex);
+                        updateButtons();
+                    }
+                }
+
+                // Переход к предыдущему клиенту
+                function prevClient() {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        localStorage.setItem('currentIndex', currentIndex);
+                        showClient(currentIndex);
+                        updateButtons();
+                    }
+                }
+
+                // Инициализация
+                updateButtons();
+
+                // Обработчики кнопок
+                document.getElementById('nextButton').addEventListener('click', nextClient);
+                document.getElementById('prevButton').addEventListener('click', prevClient);
+            </script>
+</body>
+
+</html>
